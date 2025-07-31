@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+
+  <!-- Resource -->
+
+  <ThingDef Name="Rhy_ResourceBase" Abstract="True">
+    <thingClass>ThingWithComps</thingClass>
+    <category>Item</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <selectable>True</selectable>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>1000</stackLimit>
+    <statBases>
+      <Mass>0.1</Mass>
+      <Beauty>0</Beauty>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+    <soundInteract>Silver_Drop</soundInteract>
+    <soundDrop>Silver_Drop</soundDrop>
+    <alwaysHaulable>True</alwaysHaulable>
+    <drawGUIOverlay>True</drawGUIOverlay>
+    <rotatable>False</rotatable>
+    <pathCost>0</pathCost>
+    <allowedArchonexusCount>-1</allowedArchonexusCount>
+    <techLevel>Spacer</techLevel>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+    </comps>
+  </ThingDef>
+
+  <!-- Organic Product -->
+
+  <ThingDef Name="Rhy_OrganicProductBase" ParentName="Rhy_ResourceBase" Abstract="True">
+    <graphicData>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Mass>0.03</Mass>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <healthAffectsPrice>False</healthAffectsPrice>
+  </ThingDef>
+
+  <!-- Plant Food Raw -->
+
+  <ThingDef Name="Rhy_PlantFoodRawBase" ParentName="Rhy_OrganicProductBase" Abstract="True">
+    <ingestible>
+      <preferability>RawBad</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>RawVegetable_Eat</ingestSound>
+    </ingestible>
+    <statBases>
+      <Nutrition>0.05</Nutrition>
+      <FoodPoisonChanceFixedHuman>0.02</FoodPoisonChanceFixedHuman>
+    </statBases>
+    <thingCategories>
+      <li>PlantFoodRaw</li>
+    </thingCategories>
+    <allowedArchonexusCount>200</allowedArchonexusCount>
+    <socialPropernessMatters>True</socialPropernessMatters>
+  </ThingDef>
+</Defs>

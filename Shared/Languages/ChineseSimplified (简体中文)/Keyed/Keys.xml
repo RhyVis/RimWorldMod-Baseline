@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <!-- Common -->
+
+  <RhyniaBaseline_Enable>启用</RhyniaBaseline_Enable>
+  <RhyniaBaseline_Disable>禁用</RhyniaBaseline_Disable>
+  <RhyniaBaseline_Enabled>已启用</RhyniaBaseline_Enabled>
+  <RhyniaBaseline_Disabled>已禁用</RhyniaBaseline_Disabled>
+
+  <RhyniaBaseline_Yes>是</RhyniaBaseline_Yes>
+  <RhyniaBaseline_No>否</RhyniaBaseline_No>
+
+  <!-- Settings -->
+  <RhyniaBaseline_Settings_Name>Rhynia Baseline</RhyniaBaseline_Settings_Name>
+  <RhyniaBaseline_Settings_Debug>调试</RhyniaBaseline_Settings_Debug>
+</LanguageData>

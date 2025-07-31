@@ -1,0 +1,4 @@
+*.sln
+.idea
+**/.vscode/*.json
+**/.vscode/obj/
