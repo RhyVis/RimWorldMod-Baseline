@@ -42,19 +42,22 @@ public static class ThingExtension
     /// If the count exceeds the stack limit, it is capped at the stack limit.
     /// If the thing is null, no action is taken.
     /// If the count is valid, it updates the stack count of the thing.
+    ///
+    /// Returns the updated thing or null if it was destroyed or invalid.
     /// </summary>
-    public static void SetStackCount(this Thing? thing, int count)
+    public static Thing? SetStackCount(this Thing? thing, int count)
     {
         if (thing is null)
-            return;
+            return null;
 
         if (count <= 0)
         {
             thing.Destroy();
-            return;
+            return null;
         }
 
         thing.stackCount = count <= thing.def.stackLimit ? count : thing.def.stackLimit;
+        return thing;
     }
 
     /// <summary>

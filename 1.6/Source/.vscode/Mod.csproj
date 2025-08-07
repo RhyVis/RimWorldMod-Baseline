@@ -11,8 +11,6 @@
         <Nullable>Enable</Nullable>
         <AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
         <LangVersion>latestmajor</LangVersion>
-        <RimWorldPath>../../../../../RimWorldWin64_Data/Managed</RimWorldPath>
-        <WorkShopPath>../../../../../../../workshop/content/294100</WorkShopPath>
     </PropertyGroup>
     <ItemGroup>
         <!-- Mod -->

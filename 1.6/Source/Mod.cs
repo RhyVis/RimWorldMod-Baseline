@@ -2,8 +2,14 @@ using Rhynia.Baseline.Util;
 
 namespace Rhynia.Baseline;
 
+[StaticConstructorOnStartup]
 public class Mod_Baseline(ModContentPack mod) : Mod(mod)
 {
+    static Mod_Baseline()
+    {
+        Msg.Info("Mod Rhynia Baseline initialized.");
+    }
+
     public override void DoSettingsWindowContents(Rect inRect)
     {
         base.DoSettingsWindowContents(inRect);
@@ -27,14 +33,5 @@ public class ModSettings_Baseline : ModSettings
     {
         Scribe_Values.Look(ref DebugMode, "DebugMode", false);
         base.ExposeData();
-    }
-}
-
-[StaticConstructorOnStartup]
-public static class Mod_Init
-{
-    static Mod_Init()
-    {
-        Msg.Info("Mod Rhynia Baseline initialized.");
     }
 }

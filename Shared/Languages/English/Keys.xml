@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <!-- Common -->
+
+  <RhyniaBaseline_Enable>Enable</RhyniaBaseline_Enable>
+  <RhyniaBaseline_Disable>Disable</RhyniaBaseline_Disable>
+  <RhyniaBaseline_Enabled>Enabled</RhyniaBaseline_Enabled>
+  <RhyniaBaseline_Disabled>Disabled</RhyniaBaseline_Disabled>
+
+  <RhyniaBaseline_Yes>Yes</RhyniaBaseline_Yes>
+  <RhyniaBaseline_No>No</RhyniaBaseline_No>
+
+  <!-- Settings -->
+  <RhyniaBaseline_Settings_Name>Rhynia Baseline</RhyniaBaseline_Settings_Name>
+  <RhyniaBaseline_Settings_Debug>Debug</RhyniaBaseline_Settings_Debug>
+</LanguageData>
