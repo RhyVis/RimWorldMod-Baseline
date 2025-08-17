@@ -1,5 +1,8 @@
 namespace Rhynia.Baseline.Util;
 
+/// <summary>
+/// Extension methods for the <see cref="Thing"/> class.
+/// </summary>
 public static class ThingExtension
 {
     /// <summary>
@@ -18,33 +21,32 @@ public static class ThingExtension
     }
 
     /// <summary>
-    /// Similar to <see cref="FindPawnsInRange"/>, but only returns pawns that are alive.
+    /// Similar to <see cref="FindPawnsInRange(Thing?, float)"/>, but only returns pawns that are alive.
     /// </summary>
     public static IEnumerable<Pawn> FindPawnsAliveInRange(this Thing? thing, float range) =>
         thing?.FindPawnsInRange(range).Where(pawn => pawn?.Dead == false) ?? [];
 
     /// <summary>
-    /// Based on <see cref="FindPawnsInRange"/>.
+    /// Based on <see cref="FindPawnsInRange(Thing?, float)"/>.
     /// </summary>
     public static IEnumerable<Pawn> FindPawnsInRange(this ThingComp? comp, float range) =>
         comp?.parent?.FindPawnsInRange(range) ?? [];
 
     /// <summary>
-    /// Based on <see cref="FindPawnsAliveInRange"/>.
+    /// Based on <see cref="FindPawnsAliveInRange(Thing?, float)"/>.
     /// </summary>
     public static IEnumerable<Pawn> FindPawnsAliveInRange(this ThingComp? comp, float range) =>
         comp?.parent?.FindPawnsAliveInRange(range) ?? [];
 
     /// <summary>
     /// Sets the stack count of the thing.
-    ///
+    /// <br />
     /// If the count is less than or equal to zero, the thing is destroyed.
     /// If the count exceeds the stack limit, it is capped at the stack limit.
     /// If the thing is null, no action is taken.
     /// If the count is valid, it updates the stack count of the thing.
-    ///
-    /// Returns the updated thing or null if it was destroyed or invalid.
     /// </summary>
+    /// <returns>The updated thing or null if it was destroyed or invalid.</returns>
     public static Thing? SetStackCount(this Thing? thing, int count)
     {
         if (thing is null)
@@ -86,6 +88,12 @@ public static class ThingExtension
         GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
     }
 
+    /// <summary>
+    /// Checks if the thing has a specific designation.
+    /// </summary>
+    /// <param name="thing">The thing to check.</param>
+    /// <param name="def">The designation definition to check for.</param>
+    /// <returns>True if the thing has the designation, false otherwise.</returns>
     public static bool HasDesignation(this Thing? thing, DesignationDef def)
     {
         if (thing is null || thing.Map is null)
@@ -93,6 +101,11 @@ public static class ThingExtension
         return thing.Map.designationManager.DesignationOn(thing, def) is not null;
     }
 
+    /// <summary>
+    /// Adds a designation to the thing.
+    /// </summary>
+    /// <param name="thing">The thing to add the designation to.</param>
+    /// <param name="def">The designation definition to add.</param>
     public static void AddDesignation(this Thing? thing, DesignationDef def)
     {
         if (thing is null || thing.Map is null)
@@ -101,6 +114,11 @@ public static class ThingExtension
             thing.Map.designationManager.AddDesignation(new Designation(thing, def));
     }
 
+    /// <summary>
+    /// Removes a designation from the thing.
+    /// </summary>
+    /// <param name="thing">The thing to remove the designation from.</param>
+    /// <param name="def">The designation definition to remove.</param>
     public static void RemoveDesignation(this Thing? thing, DesignationDef def)
     {
         if (thing is null || thing.Map is null)

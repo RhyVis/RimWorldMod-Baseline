@@ -16,6 +16,7 @@
     <castEdgeShadows>False</castEdgeShadows>
     <canOverlapZones>True</canOverlapZones>
     <blockWind>False</blockWind>
+    <blockLight>False</blockLight>
     <fillPercent>0</fillPercent>
     <pathCost>0</pathCost>
     <passability>Standable</passability>
@@ -71,7 +72,6 @@
         <enabled>False</enabled>
       </damageData>
     </graphicData>
-    <size>(1, 1)</size>
     <castEdgeShadows>False</castEdgeShadows>
     <blockWind>False</blockWind>
     <blockLight>False</blockLight>

@@ -1,4 +1,4 @@
-namespace Rhynia.Baseline;
+namespace Rhynia.Baseline.Util;
 
 public static class FloatMenuHelper
 {

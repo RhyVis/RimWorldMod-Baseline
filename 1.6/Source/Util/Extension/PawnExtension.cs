@@ -2,59 +2,69 @@ namespace Rhynia.Baseline.Util;
 
 public static class PawnExtension
 {
-    public static void ApplyHediff(this Pawn? pawn, HediffDef hediff, float severityAdjust = 1.0f)
+    /// <summary>
+    /// Applies a hediff to the pawn.
+    /// </summary>
+    public static void ApplyHediff(this Pawn? pawn, HediffDef def, float severityAdjust = 1.0f)
     {
         if (pawn is null)
             return;
 
-        var target = pawn.health.hediffSet.GetFirstHediffOfDef(hediff);
-        if (target is null)
+        if (pawn.health.hediffSet.GetFirstHediffOfDef(def) is { } hediff)
+            hediff.Severity += severityAdjust;
+        else
         {
-            target = HediffMaker.MakeHediff(hediff, pawn);
-            target.Severity = severityAdjust;
-            pawn.health.AddHediff(target);
+            hediff = HediffMaker.MakeHediff(def, pawn);
+            hediff.Severity = severityAdjust;
+            pawn.health.AddHediff(hediff);
         }
-
-        target.Severity += severityAdjust;
     }
 
+    /// <summary>
+    /// Applies a hediff to the pawn with the specified stats and severity adjustment.
+    /// </summary>
     public static void ApplyHediffWithStat(
         this Pawn? pawn,
-        HediffDef hediff,
+        HediffDef def,
         List<StatDef>? stats = null,
         float severityAdjust = 1.0f
     )
     {
-        if (pawn == null)
+        if (pawn is null)
             return;
-        if (!(stats?.NullOrEmpty() ?? true))
-            stats.ForEach(stat => severityAdjust *= pawn.GetStatValue(stat));
-        var target = pawn.health.hediffSet.GetFirstHediffOfDef(hediff);
-        if (target == null)
-        {
-            target = HediffMaker.MakeHediff(hediff, pawn);
-            target.Severity = severityAdjust;
-            pawn.health.AddHediff(target);
-        }
+        if (!stats.NullOrEmpty())
+            stats!.ForEach(stat => severityAdjust *= pawn.GetStatValue(stat));
+
+        if (pawn.health.hediffSet.GetFirstHediffOfDef(def) is { } hediff)
+            hediff.Severity += severityAdjust;
         else
         {
-            target.Severity += severityAdjust;
+            hediff = HediffMaker.MakeHediff(def, pawn);
+            hediff.Severity = severityAdjust;
+            pawn.health.AddHediff(hediff);
         }
     }
 
-    public static void RemoveHediff(this Pawn? pawn, HediffDef hediff)
+    /// <summary>
+    /// Removes a hediff from the pawn.
+    /// </summary>
+    public static void RemoveHediff(this Pawn? pawn, HediffDef def)
     {
-        var target = pawn?.health.hediffSet.GetFirstHediffOfDef(hediff);
-        if (target is null)
-            return;
-        pawn!.health.RemoveHediff(target);
+        if (pawn is { } p && p.health.hediffSet.GetFirstHediffOfDef(def) is { } hediff)
+            p.health.RemoveHediff(hediff);
     }
 
+    /// <summary>
+    /// Checks if the pawn has a specific hediff.
+    /// </summary>
     public static bool HasHediff(this Pawn? pawn, HediffDef hediff)
     {
-        return pawn?.health.hediffSet.GetFirstHediffOfDef(hediff) != null;
+        return pawn?.health.hediffSet.GetFirstHediffOfDef(hediff) is not null;
     }
 
+    /// <summary>
+    /// Damages a specific body part of the pawn.
+    /// </summary>
     public static void DamageBodyPart(
         this Pawn? pawn,
         BodyPartRecord bodyPart,
@@ -65,9 +75,9 @@ public static class PawnExtension
     {
         if (pawn is null || bodyPart is null)
             return;
-        Msg.Debug("Doing damage to " + bodyPart.def.label);
+        Debug($"Doing damage to {pawn.Name} - {bodyPart.def.label}");
         pawn.TakeDamage(
-            new DamageInfo(
+            new(
                 def ?? DamageDefOf.SurgicalCut,
                 amount,
                 armorPenetration,
@@ -85,14 +95,19 @@ public static class PawnExtension
         );
     }
 
+    /// <summary>
+    /// Damages a random body part of the pawn.
+    /// </summary>
     public static void DamageRandomBodyPart(this Pawn? pawn, float amount = 1f)
     {
-        var target = pawn?.health.hediffSet.GetNotMissingParts().RandomElement();
-        if (target is null)
+        if (
+            pawn is null
+            || pawn.health.hediffSet.GetNotMissingParts().RandomElement() is not { } target
+        )
             return;
-        Msg.Debug("Doing damage to " + target.def.label);
+        Debug($"Doing damage to {pawn.Name} - {target.def.label}");
         pawn!.TakeDamage(
-            new DamageInfo(
+            new(
                 DamageDefOf.SurgicalCut,
                 amount,
                 999f,
@@ -110,26 +125,24 @@ public static class PawnExtension
         );
     }
 
-    public static void CrossMapTransfer(this Pawn? pawn, Map map, IntVec3? pos)
-    {
-        if (pawn is null || map is null)
-            return;
-        if (pawn.Map == map)
-            return;
-        pawn.DeSpawnOrDeselect();
-        GenSpawn.Spawn(pawn, pos ?? map.Center, map);
-    }
-
-    public static bool IsNormalColonist(this Pawn? pawn)
+    /// <summary>
+    /// Checks if the pawn is a normal colonist.
+    /// <br />
+    /// Using <see cref="Pawn.IsColonist"/>, <see cref="Pawn.IsSlaveOfColony"/> and <see cref="Pawn.IsPrisonerOfColony"/>.
+    /// </summary>
+    public static bool IsManagedColonist(this Pawn? pawn)
     {
         if (pawn is null)
             return false;
         return pawn.IsColonist || pawn.IsSlaveOfColony || pawn.IsPrisonerOfColony;
     }
 
+    /// <summary>
+    /// Spawn the pawn at the position of the thing.
+    /// </summary>
     public static void SpawnToThing(this Pawn? pawn, Thing thing)
     {
-        if (pawn is null || thing is null)
+        if (pawn is null || thing is null or { Map: null })
             return;
         GenSpawn.Spawn(pawn, thing.Position, thing.Map);
     }

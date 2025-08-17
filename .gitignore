@@ -1,5 +1,5 @@
 *.sln
 .idea
 **/.vscode/*.json
-**/.vscode/obj/
+**/.project/obj/
 *.props

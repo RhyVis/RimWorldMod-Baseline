@@ -9,22 +9,24 @@
         <DebugType>None</DebugType>
         <DebugSymbols>False</DebugSymbols>
         <Nullable>Enable</Nullable>
+        <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
+        <GenerateTargetFrameworkAttribute>False</GenerateTargetFrameworkAttribute>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
         <LangVersion>latestmajor</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <!-- Mod -->
         <Compile Include="../**/*.cs" />
-        <Compile Remove="../.vscode/**/*.cs" />
+        <Compile Remove="../.project/**/*.cs" />
+        <Compile Remove="../Generator/**/*.cs" />
         <!-- Rimworld -->
         <Reference Include="$(RimWorldPath)/*.dll">
             <Private>False</Private>
         </Reference>
         <!-- Mods -->
         <Reference Include="$(WorkShopPath)/2009463077/Current/Assemblies/0Harmony.dll">
-            <Private>False</Private>
-        </Reference>
-        <Reference Include="$(WorkShopPath)/2023507013/1.6/Assemblies/PipeSystem.dll">
             <Private>False</Private>
         </Reference>
     </ItemGroup>
