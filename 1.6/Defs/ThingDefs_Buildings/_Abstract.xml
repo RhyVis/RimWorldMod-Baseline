@@ -72,6 +72,8 @@
         <enabled>False</enabled>
       </damageData>
     </graphicData>
+    <defaultPlacingRot>North</defaultPlacingRot>
+    <rotatable>False</rotatable>
     <castEdgeShadows>False</castEdgeShadows>
     <blockWind>False</blockWind>
     <blockLight>False</blockLight>
@@ -79,7 +81,6 @@
     <fillPercent>0.1</fillPercent>
     <pathCost>0</pathCost>
     <passability>PassThroughOnly</passability>
-    <useHitPoints>False</useHitPoints>
     <costList Inherit="False" />
     <designationCategory>Rhy_MainCategory</designationCategory>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -87,4 +88,23 @@
       <li>BuildingsMisc</li>
     </thingCategories>
   </ThingDef>
+
+  <!-- Storage -->
+
+  <ThingDef Name="Rhy_StorageBase" ParentName="Rhy_FurnBase" Abstract="True">
+    <thingClass>Building_Storage</thingClass>
+    <building>
+      <storageGroupTag>Shelf</storageGroupTag>
+      <ignoreStoredThingsBeauty>True</ignoreStoredThingsBeauty>
+      <preventDeteriorationOnTop>True</preventDeteriorationOnTop>
+      <blueprintClass>Blueprint_Storage</blueprintClass>
+      <maxItemsInCell>1</maxItemsInCell>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <minifiedDef IsNull="True" />
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
 </Defs>
