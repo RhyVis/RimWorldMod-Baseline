@@ -6,7 +6,6 @@
   <ThingDef Name="Rhy_FloorStructureBase" ParentName="BuildingBase" Abstract="True">
     <thingClass>Building</thingClass>
     <graphicData>
-      <shaderType>CutoutComplex</shaderType>
       <damageData>
         <enabled>False</enabled>
       </damageData>
