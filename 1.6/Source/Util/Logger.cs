@@ -40,6 +40,14 @@ public static class Logger<T>
     private static void Template(string label, string message, string color, object? o) =>
         Log.Message($"<color=#{color}>[{label}]</color> ({o ?? "<null>"}) {message}");
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void TemplateErr(string label, string message, string color) =>
+        Log.Error($"<color=#{color}>[{label}]</color> {message}");
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void TemplateErr(string label, string message, string color, object? o) =>
+        Log.Error($"<color=#{color}>[{label}]</color> ({o ?? "<null>"}) {message}");
+
     /// <summary>
     /// Logs a debug message.
     /// </summary>
@@ -70,7 +78,7 @@ public static class Logger<T>
     /// </summary>
     public static void Error(string message)
     {
-        Template(_label, message, "FF0000FF");
+        TemplateErr(_label, message, "FF0000FF");
     }
 
     /// <summary>
@@ -111,6 +119,6 @@ public static class Logger<T>
     /// </summary>
     public static void Error(string message, object? o)
     {
-        Template(_label, message, "FF0000FF", o);
+        TemplateErr(_label, message, "FF0000FF", o);
     }
 }
