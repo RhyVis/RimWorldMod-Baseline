@@ -12,7 +12,7 @@ public static class ThingExtension
     /// </summary>
     public static IEnumerable<Pawn> FindPawnsInRange(this Thing? thing, float range)
     {
-        if (thing is null || thing.Map is null)
+        if (thing is null or { Map: null })
             return [];
         var rangeSquared = range * range;
         return thing.Map.mapPawns.AllPawnsSpawned.Where(pawn =>

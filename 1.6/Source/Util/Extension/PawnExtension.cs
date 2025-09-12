@@ -77,21 +77,7 @@ public static class PawnExtension
             return;
         Debug($"Doing damage to {pawn.Name} - {bodyPart.def.label}");
         pawn.TakeDamage(
-            new(
-                def ?? DamageDefOf.SurgicalCut,
-                amount,
-                armorPenetration,
-                -1f,
-                null,
-                bodyPart,
-                null,
-                DamageInfo.SourceCategory.ThingOrUnknown,
-                null,
-                true,
-                true,
-                QualityCategory.Normal,
-                false
-            )
+            new(def ?? DamageDefOf.SurgicalCut, amount, armorPenetration, -1f, null, bodyPart)
         );
     }
 
@@ -105,24 +91,8 @@ public static class PawnExtension
             || pawn.health.hediffSet.GetNotMissingParts().RandomElement() is not { } target
         )
             return;
-        Debug($"Doing damage to {pawn.Name} - {target.def.label}");
-        pawn!.TakeDamage(
-            new(
-                DamageDefOf.SurgicalCut,
-                amount,
-                999f,
-                -1f,
-                null,
-                target,
-                null,
-                DamageInfo.SourceCategory.ThingOrUnknown,
-                null,
-                true,
-                true,
-                QualityCategory.Normal,
-                false
-            )
-        );
+        Debug($"Doing damage to {pawn.Name} - {target.def.defName}({target.def.LabelCap})");
+        pawn.TakeDamage(new(DamageDefOf.SurgicalCut, amount, 999f, -1f, null, target));
     }
 
     /// <summary>
