@@ -10,9 +10,9 @@ public static class DefModExt_EqualResearchUse_Helper
 {
     private static readonly Dictionary<ThingDef, List<ThingDef>> _cache = [];
 
-    public static bool IsValid(ThingDef original, ThingDef replacement) =>
-        (original == replacement)
-        || (_cache.TryGetValue(original, out var list) && list.Contains(replacement));
+    public static bool IsValid(ThingDef required, ThingDef provided) =>
+        (required == provided)
+        || (_cache.TryGetValue(required, out var list) && list.Contains(provided));
 
     static DefModExt_EqualResearchUse_Helper()
     {

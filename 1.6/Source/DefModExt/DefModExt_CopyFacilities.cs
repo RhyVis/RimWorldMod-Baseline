@@ -3,22 +3,6 @@ namespace Rhynia.Baseline;
 public class DefModExt_CopyFacilities : DefModExtension
 {
     public List<ThingDef> thingDefs = [];
-
-    [Unsaved]
-    public CompProperties_AffectedByFacilities? propFacilities = null;
-
-    public override void ResolveReferences(Def parentDef)
-    {
-        if (
-            parentDef is ThingDef def
-            && def.GetCompProperties<CompProperties_AffectedByFacilities>() is { } prop
-        )
-            propFacilities = prop;
-        else
-            Error(
-                $"DefModExt_CopyFacilities can only be applied to ThingDef with CompAffectedByFacilities. Offending def: {parentDef.defName}"
-            );
-    }
 }
 
 [StaticConstructorOnStartup]
@@ -34,14 +18,19 @@ public static class DefModExt_CopyFacilities_Helper
 
         Debug($"DefModExt_CopyFacilities: Resolving uses with {defs.Count()} defs.");
 
-        var defsBeenCopied = new HashSet<ThingDef>();
         foreach (var def in defs)
         {
             if (
                 def.GetModExtension<DefModExt_CopyFacilities>() is not { } ext
-                || ext.propFacilities == null
+                || def.GetCompProperties<CompProperties_AffectedByFacilities>()
+                    is not { } affectedByFacilityProps
             )
+            {
+                Warn(
+                    $"DefModExt_CopyFacilities: Def {def.defName} is missing either the DefModExt_CopyFacilities or CompAffectedByFacilities, skipping."
+                );
                 return;
+            }
 
             var facilitiesToCopy = new HashSet<ThingDef>();
             foreach (var thingDef in ext.thingDefs)
@@ -50,22 +39,21 @@ public static class DefModExt_CopyFacilities_Helper
                 if (targetProp == null)
                 {
                     Warn(
-                        $"DefModExt_CopyFacilities: Target thingDef {thingDef.defName} does not have CompAffectedByFacilities, skipping."
+                        $"DefModExt_CopyFacilities: Target thingDef {thingDef.defName} requested by {def.defName} does not have CompAffectedByFacilities, skipping."
                     );
                     continue;
                 }
 
-                foreach (var facility in targetProp.linkableFacilities)
-                    facilitiesToCopy.Add(facility);
-                defsBeenCopied.Add(thingDef);
+                foreach (var facilityDef in targetProp.linkableFacilities)
+                    if (facilityDef != def)
+                        facilitiesToCopy.Add(facilityDef);
             }
 
-            foreach (var facility in facilitiesToCopy)
-                if (!ext.propFacilities.linkableFacilities.Contains(facility) && facility != def)
-                    ext.propFacilities.linkableFacilities.Add(facility);
+            affectedByFacilityProps.linkableFacilities ??= [];
+            affectedByFacilityProps.linkableFacilities.AddRangeUnique(facilitiesToCopy);
         }
 
         foreach (var def in DefDatabase<ThingDef>.AllDefs.Where(def => def.HasComp<CompFacility>()))
-            def.GetCompProperties<CompProperties_AffectedByFacilities>()?.ResolveReferences(def);
+            def.GetCompProperties<CompProperties_Facility>().ResolveReferences(def);
     }
 }
