@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <packageId>Rhynia.Mod.Baseline</packageId>
-  <name>[RHY] Baseline</name>
+  <name>Rhynia's Baseline</name>
   <author>Rhynia</author>
   <supportedVersions>
     <li>1.6</li>
