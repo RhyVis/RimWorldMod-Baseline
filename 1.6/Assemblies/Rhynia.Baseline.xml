@@ -123,6 +123,16 @@
             </summary>
             <returns>The value associated with the specified key, or a new value if the key is not present.</returns>
         </member>
+        <member name="T:Rhynia.Baseline.Util.HarmonyExtension">
+            <summary>
+            Extension methods for Harmony.
+            </summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.HarmonyExtension.AsCodeMatcher(System.Collections.Generic.IEnumerable{HarmonyLib.CodeInstruction})">
+            <summary>
+            Directly convert IEnumerable of CodeInstruction to CodeMatcher
+            </summary>
+        </member>
         <member name="M:Rhynia.Baseline.Util.ObjectExtension.NotEqualToAnyOf(System.Object,System.Object[])">
             <summary>
             Checks if the object is not equal to any of the provided values.
@@ -375,6 +385,108 @@
             <param name="message">The message to log</param>
             <param name="o">An optional object to include in the log</param>
             </summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.Logger`1.I_Debug(System.String,System.String)">
+            <summary>
+            Logs a debug message.
+            </summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.Logger`1.I_Info(System.String,System.String)">
+            <summary>
+            Logs an informational message.
+            </summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.Logger`1.I_Warn(System.String,System.String)">
+            <summary>
+            Logs a warning message.
+            </summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.Logger`1.I_Error(System.String,System.String)">
+            <summary>
+            Logs an error message.
+            </summary>
+        </member>
+        <member name="T:Rhynia.Baseline.Util.PatchBase">
+            <summary>
+            A base class for collecting patches to be applied via Harmony.
+            </summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.PatchBase.#ctor(HarmonyLib.Harmony)">
+            <summary>
+            A base class for collecting patches to be applied via Harmony.
+            </summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchBase.Name">
+            <summary>
+            The name of the patch collection.
+            </summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchBase.ModId">
+            <summary>
+            The mod ID that this patch collection is associated with.
+            </summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchBase.LogLabel">
+            <summary>
+            The log label used for logging messages related to this patch collection.
+            </summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchBase.PatchProviders">
+            <summary>
+            A collection of patch providers that define the patches to be applied.
+            </summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchBase.ShouldApply">
+            <summary>
+            Determines whether all patches should be applied based on the mod's active status.
+            <br />
+            This check is performed before applying any patches.
+            </summary>
+        </member>
+        <member name="T:Rhynia.Baseline.Util.PatchProvider">
+            <summary>
+            A record representing a patch provider with necessary details for applying a Harmony patch.
+            </summary>
+            <param name="Name">Name of the patch provider.</param>
+            <param name="ShouldApply">A function that determines whether the patch should be applied.</param>
+            <param name="TargetMethodProvider">A function that provides the target method for the patch.</param>
+            <param name="PatchMethodProvider">A function that provides the patch method.</param>
+            <param name="Type">The type of the patch.</param>
+            <param name="LatePatch">Whether the patch should be applied late (after initialization).</param>
+            <param name="LatePatchAsync">Whether the late patch should be applied asynchronously.</param>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.PatchProvider.#ctor(System.String,System.Func{System.Boolean},System.Func{System.Reflection.MethodBase},System.Func{HarmonyLib.HarmonyMethod},HarmonyLib.HarmonyPatchType,System.Boolean,System.Boolean)">
+            <summary>
+            A record representing a patch provider with necessary details for applying a Harmony patch.
+            </summary>
+            <param name="Name">Name of the patch provider.</param>
+            <param name="ShouldApply">A function that determines whether the patch should be applied.</param>
+            <param name="TargetMethodProvider">A function that provides the target method for the patch.</param>
+            <param name="PatchMethodProvider">A function that provides the patch method.</param>
+            <param name="Type">The type of the patch.</param>
+            <param name="LatePatch">Whether the patch should be applied late (after initialization).</param>
+            <param name="LatePatchAsync">Whether the late patch should be applied asynchronously.</param>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchProvider.Name">
+            <summary>Name of the patch provider.</summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchProvider.ShouldApply">
+            <summary>A function that determines whether the patch should be applied.</summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchProvider.TargetMethodProvider">
+            <summary>A function that provides the target method for the patch.</summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchProvider.PatchMethodProvider">
+            <summary>A function that provides the patch method.</summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchProvider.Type">
+            <summary>The type of the patch.</summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchProvider.LatePatch">
+            <summary>Whether the patch should be applied late (after initialization).</summary>
+        </member>
+        <member name="P:Rhynia.Baseline.Util.PatchProvider.LatePatchAsync">
+            <summary>Whether the late patch should be applied asynchronously.</summary>
         </member>
         <member name="T:Rhynia.Baseline.Util.TimingScope">
             <summary>

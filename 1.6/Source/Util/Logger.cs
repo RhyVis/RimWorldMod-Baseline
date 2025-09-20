@@ -25,7 +25,7 @@ public class LoggerLabelAttribute(string label) : Attribute
 /// <typeparam name="T">Class or struct type, using <see cref="LoggerLabelAttribute"/> to specify the log label.</typeparam>
 public static class Logger<T>
 {
-    private static readonly string _label = typeof(T)
+    private static readonly string Label = typeof(T)
         .GetCustomAttributes(typeof(LoggerLabelAttribute), false)
         .FirstOrDefault()
         is LoggerLabelAttribute attribute
@@ -33,8 +33,11 @@ public static class Logger<T>
         : typeof(T).Name;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void Template(string label, string message, string color) =>
-        Log.Message($"<color=#{color}>[{label}]</color> {message}");
+    private static void Template(string label, string message, string color)
+    {
+        if (Prefs.DevMode)
+            Log.Message($"<color=#{color}>[{label}]</color> {message}");
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void Template(string label, string message, string color, object? o) =>
@@ -51,74 +54,73 @@ public static class Logger<T>
     /// <summary>
     /// Logs a debug message.
     /// </summary>
-    public static void Debug(string message)
-    {
-        if (Prefs.DevMode)
-            Template(_label, message, "888888FF");
-    }
+    public static void Debug(string message) => Template(Label, message, CD);
 
     /// <summary>
     /// Logs an informational message.
     /// </summary>
-    public static void Info(string message)
-    {
-        Template(_label, message, "00AAFFFF");
-    }
+    public static void Info(string message) => Template(Label, message, CI);
 
     /// <summary>
     /// Logs a warning message.
     /// </summary>
-    public static void Warn(string message)
-    {
-        Template(_label, message, "FFFF00FF");
-    }
+    public static void Warn(string message) => Template(Label, message, CW);
 
     /// <summary>
     /// Logs an error message.
     /// </summary>
-    public static void Error(string message)
-    {
-        TemplateErr(_label, message, "FF0000FF");
-    }
+    public static void Error(string message) => TemplateErr(Label, message, CE);
 
     /// <summary>
     /// Logs a debug message.
     /// <param name="message">The message to log</param>
     /// <param name="o">An optional object to include in the log</param>
     /// </summary>
-    public static void Debug(string message, object? o)
-    {
-        if (Prefs.DevMode)
-            Template(_label, message, "888888FF", o);
-    }
+    public static void Debug(string message, object? o) => Template(Label, message, CD, o);
 
     /// <summary>
     /// Logs an informational message.
     /// <param name="message">The message to log</param>
     /// <param name="o">An optional object to include in the log</param>
     /// </summary>
-    public static void Info(string message, object? o)
-    {
-        Template(_label, message, "00AAFFFF", o);
-    }
+    public static void Info(string message, object? o) => Template(Label, message, CI, o);
 
     /// <summary>
     /// Logs a warning message.
     /// <param name="message">The message to log</param>
     /// <param name="o">An optional object to include in the log</param>
     /// </summary>
-    public static void Warn(string message, object? o)
-    {
-        Template(_label, message, "FFFF00FF", o);
-    }
+    public static void Warn(string message, object? o) => Template(Label, message, CW, o);
 
     /// <summary>
     /// Logs an error message.
     /// <param name="message">The message to log</param>
     /// <param name="o">An optional object to include in the log</param>
     /// </summary>
-    public static void Error(string message, object? o)
-    {
-        TemplateErr(_label, message, "FF0000FF", o);
-    }
+    public static void Error(string message, object? o) => TemplateErr(Label, message, CE, o);
+
+    /// <summary>
+    /// Logs a debug message.
+    /// </summary>
+    internal static void I_Debug(string message, string label) => Template(label, message, CD);
+
+    /// <summary>
+    /// Logs an informational message.
+    /// </summary>
+    internal static void I_Info(string message, string label) => Template(label, message, CI);
+
+    /// <summary>
+    /// Logs a warning message.
+    /// </summary>
+    internal static void I_Warn(string message, string label) => Template(label, message, CW);
+
+    /// <summary>
+    /// Logs an error message.
+    /// </summary>
+    internal static void I_Error(string message, string label) => TemplateErr(label, message, CE);
+
+    private const string CD = "888888FF";
+    private const string CI = "00AAFFFF";
+    private const string CW = "FFFF00FF";
+    private const string CE = "FF0000FF";
 }
