@@ -33,15 +33,34 @@ public static class Logger<T>
         : typeof(T).Name;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void Template(string label, string message, string color)
+    private static void TemplateDbg(string label, string message, string color)
     {
         if (Prefs.DevMode)
             Log.Message($"<color=#{color}>[{label}]</color> {message}");
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void TemplateDbg(string label, string message, string color, object? o)
+    {
+        if (Prefs.DevMode)
+            Log.Message($"<color=#{color}>[{label}]</color> ({o ?? "<null>"}) {message}");
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void Template(string label, string message, string color) =>
+        Log.Message($"<color=#{color}>[{label}]</color> {message}");
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void Template(string label, string message, string color, object? o) =>
         Log.Message($"<color=#{color}>[{label}]</color> ({o ?? "<null>"}) {message}");
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void TemplateWrn(string label, string message, string color) =>
+        Log.Warning($"<color=#{color}>[{label}]</color> {message}");
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void TemplateWrn(string label, string message, string color, object? o) =>
+        Log.Warning($"<color=#{color}>[{label}]</color> ({o ?? "<null>"}) {message}");
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void TemplateErr(string label, string message, string color) =>
@@ -54,7 +73,7 @@ public static class Logger<T>
     /// <summary>
     /// Logs a debug message.
     /// </summary>
-    public static void Debug(string message) => Template(Label, message, CD);
+    public static void Debug(string message) => TemplateDbg(Label, message, CD);
 
     /// <summary>
     /// Logs an informational message.
@@ -64,7 +83,7 @@ public static class Logger<T>
     /// <summary>
     /// Logs a warning message.
     /// </summary>
-    public static void Warn(string message) => Template(Label, message, CW);
+    public static void Warn(string message) => TemplateWrn(Label, message, CW);
 
     /// <summary>
     /// Logs an error message.
@@ -76,7 +95,7 @@ public static class Logger<T>
     /// <param name="message">The message to log</param>
     /// <param name="o">An optional object to include in the log</param>
     /// </summary>
-    public static void Debug(string message, object? o) => Template(Label, message, CD, o);
+    public static void Debug(string message, object? o) => TemplateDbg(Label, message, CD, o);
 
     /// <summary>
     /// Logs an informational message.
@@ -90,7 +109,7 @@ public static class Logger<T>
     /// <param name="message">The message to log</param>
     /// <param name="o">An optional object to include in the log</param>
     /// </summary>
-    public static void Warn(string message, object? o) => Template(Label, message, CW, o);
+    public static void Warn(string message, object? o) => TemplateWrn(Label, message, CW, o);
 
     /// <summary>
     /// Logs an error message.
@@ -102,7 +121,7 @@ public static class Logger<T>
     /// <summary>
     /// Logs a debug message.
     /// </summary>
-    internal static void I_Debug(string message, string label) => Template(label, message, CD);
+    internal static void I_Debug(string message, string label) => TemplateDbg(label, message, CD);
 
     /// <summary>
     /// Logs an informational message.
@@ -112,7 +131,7 @@ public static class Logger<T>
     /// <summary>
     /// Logs a warning message.
     /// </summary>
-    internal static void I_Warn(string message, string label) => Template(label, message, CW);
+    internal static void I_Warn(string message, string label) => TemplateWrn(label, message, CW);
 
     /// <summary>
     /// Logs an error message.

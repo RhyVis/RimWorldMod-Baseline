@@ -18,7 +18,7 @@ internal static class Patch_ResearchAt
                     method,
                     transpiler: new(typeof(Patch_ResearchAt), nameof(Transpiler))
                 );
-                Info("Applied Patch_ResearchAt.");
+                Debug("Applied Patch_ResearchAt.");
             }
             else
                 Error("Failed to find target method for Patch_ResearchAt.");

@@ -1,11 +1,9 @@
-using System.Reflection;
-
 namespace Rhynia.Baseline.Util;
 
 /// <summary>
 /// A base class for collecting patches to be applied via Harmony.
 /// </summary>
-public abstract class PatchBase(Harmony harmony)
+public abstract class PatchBase
 {
     /// <summary>
     /// The name of the patch collection.
@@ -35,7 +33,10 @@ public abstract class PatchBase(Harmony harmony)
     protected virtual bool ShouldApply =>
         ModsConfig.IsActive(ModId) || ModLister.GetActiveModWithIdentifier(ModId, true) is not null;
 
-    public void Apply()
+    /// <summary>
+    /// Applies all patches defined in the PatchProviders collection using the provided Harmony instance.
+    /// </summary>
+    public void Apply(Harmony harmony)
     {
         if (!ShouldApply)
         {
@@ -218,3 +219,12 @@ public record PatchProvider(
     bool LatePatch = false,
     bool LatePatchAsync = false
 );
+
+public static class PatchBaseExtensions
+{
+    /// <summary>
+    /// Applies the patches defined in the specified PatchBase-derived class using the provided Harmony instance.
+    /// </summary>
+    public static void Apply<T>(this Harmony harmony)
+        where T : PatchBase, new() => new T().Apply(harmony);
+}

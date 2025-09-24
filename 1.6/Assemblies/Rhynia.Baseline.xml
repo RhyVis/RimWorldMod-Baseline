@@ -4,6 +4,11 @@
         <name>Rhynia.Baseline</name>
     </assembly>
     <members>
+        <member name="T:Rhynia.Baseline.ITab_ConfigureThing`1">
+            <summary>
+            Base class for tabs that configure a specific Thing properties.
+            </summary>
+        </member>
         <member name="T:Rhynia.Baseline.Util.AtomicContainer`1">
             <summary>
             A thread-safe container for a single value.
@@ -406,12 +411,14 @@
             Logs an error message.
             </summary>
         </member>
-        <member name="T:Rhynia.Baseline.Util.PatchBase">
+        <member name="M:Rhynia.Baseline.Util.ModUtil.IsModActive(System.String)">
             <summary>
-            A base class for collecting patches to be applied via Harmony.
+            Checks if a mod with the given modId is active.
+            <br/>
+            Twice checks ModsConfig and ModLister to ensure local mods compatibility.
             </summary>
         </member>
-        <member name="M:Rhynia.Baseline.Util.PatchBase.#ctor(HarmonyLib.Harmony)">
+        <member name="T:Rhynia.Baseline.Util.PatchBase">
             <summary>
             A base class for collecting patches to be applied via Harmony.
             </summary>
@@ -441,6 +448,11 @@
             Determines whether all patches should be applied based on the mod's active status.
             <br />
             This check is performed before applying any patches.
+            </summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.PatchBase.Apply(HarmonyLib.Harmony)">
+            <summary>
+            Applies all patches defined in the PatchProviders collection using the provided Harmony instance.
             </summary>
         </member>
         <member name="T:Rhynia.Baseline.Util.PatchProvider">
@@ -487,6 +499,11 @@
         </member>
         <member name="P:Rhynia.Baseline.Util.PatchProvider.LatePatchAsync">
             <summary>Whether the late patch should be applied asynchronously.</summary>
+        </member>
+        <member name="M:Rhynia.Baseline.Util.PatchBaseExtensions.Apply``1(HarmonyLib.Harmony)">
+            <summary>
+            Applies the patches defined in the specified PatchBase-derived class using the provided Harmony instance.
+            </summary>
         </member>
         <member name="T:Rhynia.Baseline.Util.TimingScope">
             <summary>
