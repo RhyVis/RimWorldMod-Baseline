@@ -29,4 +29,22 @@ public static class FloatMenuHelper
             return;
         Find.WindowStack.Add(new FloatMenu(options, title));
     }
+
+    public static void BuildMenu(this IEnumerable<FloatMenuOption> options)
+    {
+        if (options is null)
+            return;
+        if (!options.Any())
+            return;
+        Find.WindowStack.Add(new FloatMenu([.. options]));
+    }
+
+    public static void BuildMenu(this IEnumerable<FloatMenuOption> options, string title)
+    {
+        if (options is null)
+            return;
+        if (!options.Any())
+            return;
+        Find.WindowStack.Add(new FloatMenu([.. options], title));
+    }
 }

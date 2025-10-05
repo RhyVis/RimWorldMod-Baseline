@@ -28,8 +28,7 @@ public static class DefModExt_EqualResearchUse_Helper
             if (def.GetModExtension<DefModExt_EqualResearchUse>() is { } ext)
                 foreach (var thingDef in ext.thingDefs)
                 {
-                    if (!_cache.ContainsKey(thingDef))
-                        _cache[thingDef] = [];
+                    _cache[thingDef] ??= [];
                     _cache[thingDef].Add(def);
                 }
 
